@@ -1,0 +1,88 @@
+
+//Address.java
+public class Address{
+    private String city;
+    private String state;
+    private String country;
+    
+    public Address(){
+        System.out.println("Def of Add Consr");
+    }
+    
+    public Address(String name, String state, String country){
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
+    
+    public String toString(){
+        return city + " " + state + " " + country;
+    }
+}
+
+//Employee.java
+
+public class Employee{
+    private int id;
+    private String name;
+    Address address;
+    
+    public Employee(){
+        System.out.println("Def of Employee Consr");
+    }
+    
+    public Employee(String name, int id, Address address){
+        this.name = name;
+        this.id = id;
+        this.address = address;
+    }
+    
+    public void display(){
+        System.out.println("Name:" + name + "id" + id);
+        System.out.println(address.toString());
+    }
+}
+
+//XML file
+
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+       
+       <bean id="AddressBean" class="Address">
+       <construct-arg value="bangalore"><constrcutor-arg>
+       <constructor-arg value="karnataka"></constructor-arg>
+       <constructor-arg value="Indai"></constructor-arg>
+       </bean>
+        <bean id="EmployeeBean" class="Employee">
+            <constructor-arg value="10" type="int"></constructor-arg>
+            <constructor-arg value="maha" type="String"></constructor-arg>
+            <constructor-arg>
+            <ref bean="AddressBean"/>
+            </constructor-arg>
+        </bean>
+</beans>
+
+package com.javatpoint;  
+  
+import org.springframework.beans.factory.BeanFactory;  
+import org.springframework.beans.factory.xml.XmlBeanFactory;  
+import org.springframework.core.io.*;  
+  
+public class Test {  
+    public static void main(String[] args) {  
+          
+        Resource r=new ClassPathResource("applicationContext.xml");  
+        BeanFactory factory=new XmlBeanFactory(r);  
+          
+        Employee s=(Employee)factory.getBean("e");  
+        s.show();  
+          
+    }  
+}  
+                
+                
