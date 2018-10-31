@@ -1,0 +1,18 @@
+//Dependence Injection
+
+class Employee{
+    Address address;
+    Employee(){
+        address = new Address();
+    }
+}
+
+
+//Inversion Of Concltrol
+
+class EmployeeP{
+    Address address;
+    Employee(Address address){
+        this.address = address;
+    }
+}
