@@ -22,7 +22,8 @@ public class FSP{
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
     <bean id="studentbean" class="Student">
-        <property name="name" value="Mahesh"></property>
+        <property name="name" value="Mahesh"></property> //By setters
+        <constrcutor-arg value="10" type="int"></constructor-arg>//By constructor
     </bean>
 </beans>
 
