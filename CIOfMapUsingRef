@@ -1,0 +1,111 @@
+import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+class Question{
+    private String name;
+    private int id
+   // private String by;
+    private Map<Answer, User>;
+    
+    public Question(){}
+    
+    public Question(int id, String name, Map<Answer, User> answers){
+        this.id = id;
+        this.name = name;
+       // this.by = by;
+       this.answers = answers;
+    }
+    
+    public display(){
+        System.out.println("Id:"+id+"Name:"+name);
+        System.out.println("Answers....");
+        
+        Set<Entry<Answer, User>> set = answers.entrySet();
+        Iterator itr = set.iterator();
+        while(itr.hasNext()){
+            Entry<Answer,User> entry = itr.next();
+            System.out.println("Ans"+entry.getKey());
+            System.out.println("Value"+entry.getValue());
+         }
+        }
+    }
+}
+//Answer.java
+
+class Answer{
+    private int id;
+    private String answer;
+    private String postedby;
+    public Answer(){}
+    public Answer(String answer, String postedby, int id){
+        this.answer = answer;
+        this.postedby = postedby;
+        this.id = id;
+    }
+    public String toString(){
+        return answer+" "+postedby+" "+id;
+    }
+}
+
+//user.java
+class User{
+    private int id;
+    private String name, email;
+    
+    User(){}
+    public User(int id, String name, String email){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+    public String toString(){
+        return id+" "+name+" "+email;
+    }
+}
+
+
+//applicationContext.xml
+
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+<bean id="user1" class="User">
+<constructor-arg value="1"></constructor-arg>
+<constructor-arg name="Arun"></constructor-arg>
+<constructor-arg email="Arun@gmail.com" ></constructor-arg>
+</bean>
+<bean id="user2" class="User">
+<constructor-arg value="2"></constructor-arg>
+<constructor-arg name="Vijay"></constructor-arg>
+<constructor-arg email="Vijay@gmail.com"></constructor-arg>
+</bean>
+
+<bean id="QuestionBean" class="Question">
+<constructor-arg value="1" type="int">
+</constructor-arg>
+<constructor-arg value="What is Java" type="String"></constructor-arg>
+<constructor-arg>
+<map>
+<entry key-ref="answer1" value="value1"/>
+<entry key-ref="answer2" value="value2"/>
+</map>
+</constructor-arg>
+</bean>
+</beans>
+
+//Test.java
+
+public class Test{
+    public static void main(String[] args){
+        Resource resource = new ClassPathResource("application.xml");
+        BeanFactory factory = new XmlBeanFactory(resource);
+        question = (Question)factory.getBean("QuestaionBean");
+        question.display();
+    }
+}
