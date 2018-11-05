@@ -1,0 +1,74 @@
+class Address{
+    private String addressLine1;
+    private String city;
+    private String state;
+    private String country;
+    
+    //getter and setter for the variables;
+    public String toString(){
+        return addressLine1+" "+city+" "+state+" "+country;
+    }
+}
+
+class Employee{
+    private int id;
+    private String name;
+    private Address address;
+    
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return id;
+    }
+     public String setId(String name){
+        this.name = name;
+    }
+    public String getName(){
+        return name;
+    }
+     public Address getAddress();
+        return address;
+    public void setAddress(Address address){
+        this.address = address;
+    }
+    
+    public void display(){
+        System.out.println("Id:"+id+" Name"+name)
+        System.out.println(address);
+    }
+}
+
+//applicationContext.xml
+
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
+    <bean id="address1" class="Address">
+    <property name="addressLine1" value="something"></property>
+    <property name="city" value="Bangalore"></property>
+    <property name="state" value="Karnataka"></property>
+    <property name="Country" value="India"></property>
+    </bean>
+ <bean id="EmployeeBean" class="Employee">
+ <property name="id"><value>20</value></property>
+  <property name="name"><value>maha</value></property> </bean>
+   //<property name="city"><value>Bangalore</value></property>
+   <property name="address" ref="address1"></propety>
+</beans>
+
+//Test.java
+
+public class Test{
+    public static void main(String[] args){
+        Resource resource = new ClassPathResource("applicationContext.xml");
+        Factory factory = new BeanFactory(resource);
+        
+        Employee employee = (Employee)factory.getBean(EmployeeBean);
+        employee.display();
+    }
+}
