@@ -1,0 +1,59 @@
+import java.util.Iterator;
+import java.util.List;
+
+class Question{
+    private int id;
+    private String name;
+    private List<String> answers;
+    
+    public Question(){}
+    
+    public Quetion(int id, String name, List<String> answers){
+        super();
+        this.name = name;
+        this.id = id;
+        this.answers = answers;
+    }
+    public void display(){
+        System.out.println(id + " " + name);
+        System.out.println("Answers");
+        
+        Iterator itr = answers.iterator();
+        while(itr.hasNext()){
+            System.out.printl(itr.next));
+        }
+    }
+}
+
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
+ 
+<bean id="QuestionBean" class="Question">
+<constructor-arg value="111" type="int"/>
+<constructor-arg value="Nothig" type="String"/>
+<constructor-arg>
+<list>
+<value>Java is Programmig Language</value>
+<value>It is platform independetn</value>
+<value>java is a indonesia island</value>
+</list>
+</constructor-arg>
+</bean>
+
+ </beans>
+ 
+ 
+ public class Test{
+     public static void main(String[] args){
+        Resource resource = new ClassPathResource("applicationContext.xml);
+        BeanFactory factory = new XmlBeanFactory(r);
+        
+        Question question = (Question)r.getBean("QuestionBean");
+        quetion.display();
+     }
+ }
