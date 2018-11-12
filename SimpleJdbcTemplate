@@ -1,0 +1,72 @@
+//Simple jdbctemplate
+
+assume table created in DataBase: create table employee(id number(10), name varchar2(20), salary number(30));
+//Employee.java
+class Employee{
+    private int id;
+    private String name;
+    private float salary;
+    
+    //no-arg and parameterised constructor
+    //setters and getter
+    public String toString(){
+        return id + " " + name + " " + salary;
+    }
+}
+
+//EmployeeDao.java
+
+class EmployeeDao{
+    private JdbcTemplate jdbcTemplate;
+    
+    EmployeeDao(JdbcTemplate jdbcTemplate){
+        this.EmployeeDao = jdbcTemplate;
+    }
+    public int update(Employee e){
+        String query = "update employee set name = ? where id = ?";
+        return jdbcTemplate.update(query, e.getName(), e.getId());
+    }
+}
+
+//applicationContext.xml
+
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<property name="driverClassName" value=""/>
+<property name="url" value=""/>
+<property name="username" value=""/>
+<property name="password" value=""/>
+
+</bean>
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+<constructor-arg ref="ds"/>
+</bean>
+
+<bean id="edao" class="EmployeeDao">
+<constructor-arg>
+<ref bean="jdbcTemplate"/>
+</constructor-arg>
+</bean>
+</beans>
+//Test.java
+
+public class Test{
+    public static void main(String[] args){
+        ApplicationContext context = ClassPathXmlApplicationContext("applicationContext.xml");
+        EmployeeDao edao = (EmployeeDao)context.getBean("edao");
+        int n = edao.update(new Employee(10, nothing, 10000));
+        System.out.println(n);
+    }
+}
+
+
+
+
